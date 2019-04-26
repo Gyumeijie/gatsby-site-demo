@@ -3,6 +3,7 @@ import { Link } from "gatsby"
 import Header from "../components/header"
 import Container from "../components/container"
 import Styles from "./about.module.css"
+import { graphql } from "gatsby"
 
 const User = props => (
   <div className={Styles.user}>
@@ -27,10 +28,10 @@ let users = [
   },
 ]
 
-export default () => (
+export default ({ data }) => (
   <Container>
     <Link to="/contact">Contact</Link>
-    <Header headerText="About CSS Module" />
+    <Header headerText={data.site.siteMetadata.aboutTitle} />
     {users.map(user => (
       <User
         username={user.username}
@@ -40,3 +41,13 @@ export default () => (
     ))}
   </Container>
 )
+
+export const query = graphql`
+  query {
+    site {
+      siteMetadata {
+        aboutTitle
+      }
+    }
+  }
+`
